@@ -1,0 +1,131 @@
+-------------------------------------------------------------------------------
+Test set: com.meuprojeto.tests.AgendamentoEntrevistaTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 32.44 s <<< FAILURE! -- in com.meuprojeto.tests.AgendamentoEntrevistaTest
+com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarSemSelecionarEstudante -- Time elapsed: 9.531 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+Locator expected to be visible
+Call log:
+Locator.expect with timeout 5000ms
+waiting for locator(".Mui-error")
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:68)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:50)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:354)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:349)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:698)
+	at com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarSemSelecionarEstudante(AgendamentoEntrevistaTest.java:83)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarComDataPassada -- Time elapsed: 4.585 s <<< ERROR!
+com.microsoft.playwright.PlaywrightException: 
+Error {
+  message='Error: strict mode violation: locator(".Mui-error") resolved to 3 elements:
+    1) <label for="«rv»" id="«rv»-label" data-shrink="true" cl…>Data da Entrevista</label> aka locator("label").filter(new Locator.FilterOptions().setHasText("Data da Entrevista"))
+    2) <div class="MuiInputBase-root MuiOutlinedInput-root M…>…</div> aka locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Data da Entrevista$")))
+    3) <p id="«rv»-helper-text" class="MuiFormHelperText-r…>A data não pode ser no passado.</p> aka getByText("A data não pode ser no")
+
+  name='Error
+  stack='Error: Error: strict mode violation: locator(".Mui-error") resolved to 3 elements:
+    1) <label for="«rv»" id="«rv»-label" data-shrink="true" cl…>Data da Entrevista</label> aka locator("label").filter(new Locator.FilterOptions().setHasText("Data da Entrevista"))
+    2) <div class="MuiInputBase-root MuiOutlinedInput-root M…>…</div> aka locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Data da Entrevista$")))
+    3) <p id="«rv»-helper-text" class="MuiFormHelperText-r…>A data não pode ser no passado.</p> aka getByText("A data não pode ser no")
+
+    at CRExecutionContext.evaluateWithArguments (/tmp/playwright-java-4935309669370064463/package/lib/server/chromium/crExecutionContext.js:92:33)
+    at async LongStandingScope._race (/tmp/playwright-java-4935309669370064463/package/lib/utils/manualPromise.js:96:14)
+    at async evaluateExpression (/tmp/playwright-java-4935309669370064463/package/lib/server/javascript.js:241:12)
+    at async /tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1242:13
+    at async Frame.retryWithProgressAndTimeouts (/tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:912:24)
+    at async /tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1220:14
+    at async ProgressController.run (/tmp/playwright-java-4935309669370064463/package/lib/server/progress.js:91:22)
+    at async Frame.expect (/tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1199:27)
+    at async FrameDispatcher.expect (/tmp/playwright-java-4935309669370064463/package/lib/server/dispatchers/frameDispatcher.js:273:20)
+    at async LongStandingScope._race (/tmp/playwright-java-4935309669370064463/package/lib/utils/manualPromise.js:96:14)
+}
+Call log:
+- Locator.expect with timeout 5000ms
+- waiting for locator(".Mui-error")
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:54)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:120)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:129)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:106)
+	at com.microsoft.playwright.impl.LocatorImpl.expectImpl(LocatorImpl.java:620)
+	at com.microsoft.playwright.impl.LocatorImpl.lambda$expect$8(LocatorImpl.java:603)
+	at com.microsoft.playwright.impl.LoggingSupport.withLogging(LoggingSupport.java:47)
+	at com.microsoft.playwright.impl.ChannelOwner.withLogging(ChannelOwner.java:89)
+	at com.microsoft.playwright.impl.LocatorImpl.expect(LocatorImpl.java:603)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:60)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:50)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:354)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:349)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:698)
+	at com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarComDataPassada(AgendamentoEntrevistaTest.java:60)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: com.microsoft.playwright.impl.DriverException: Error {
+  message='Error: strict mode violation: locator(".Mui-error") resolved to 3 elements:
+    1) <label for="«rv»" id="«rv»-label" data-shrink="true" cl…>Data da Entrevista</label> aka locator("label").filter(new Locator.FilterOptions().setHasText("Data da Entrevista"))
+    2) <div class="MuiInputBase-root MuiOutlinedInput-root M…>…</div> aka locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Data da Entrevista$")))
+    3) <p id="«rv»-helper-text" class="MuiFormHelperText-r…>A data não pode ser no passado.</p> aka getByText("A data não pode ser no")
+
+  name='Error
+  stack='Error: Error: strict mode violation: locator(".Mui-error") resolved to 3 elements:
+    1) <label for="«rv»" id="«rv»-label" data-shrink="true" cl…>Data da Entrevista</label> aka locator("label").filter(new Locator.FilterOptions().setHasText("Data da Entrevista"))
+    2) <div class="MuiInputBase-root MuiOutlinedInput-root M…>…</div> aka locator("div").filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Data da Entrevista$")))
+    3) <p id="«rv»-helper-text" class="MuiFormHelperText-r…>A data não pode ser no passado.</p> aka getByText("A data não pode ser no")
+
+    at CRExecutionContext.evaluateWithArguments (/tmp/playwright-java-4935309669370064463/package/lib/server/chromium/crExecutionContext.js:92:33)
+    at async LongStandingScope._race (/tmp/playwright-java-4935309669370064463/package/lib/utils/manualPromise.js:96:14)
+    at async evaluateExpression (/tmp/playwright-java-4935309669370064463/package/lib/server/javascript.js:241:12)
+    at async /tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1242:13
+    at async Frame.retryWithProgressAndTimeouts (/tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:912:24)
+    at async /tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1220:14
+    at async ProgressController.run (/tmp/playwright-java-4935309669370064463/package/lib/server/progress.js:91:22)
+    at async Frame.expect (/tmp/playwright-java-4935309669370064463/package/lib/server/frames.js:1199:27)
+    at async FrameDispatcher.expect (/tmp/playwright-java-4935309669370064463/package/lib/server/dispatchers/frameDispatcher.js:273:20)
+    at async LongStandingScope._race (/tmp/playwright-java-4935309669370064463/package/lib/utils/manualPromise.js:96:14)
+}
+Call log:
+- Locator.expect with timeout 5000ms
+- waiting for locator(".Mui-error")
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:209)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:118)
+	... 16 more
+
+com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarComCamposVazios -- Time elapsed: 9.146 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+Locator expected to be visible
+Call log:
+Locator.expect with timeout 5000ms
+waiting for locator(".Mui-error")
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:68)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:50)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:354)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:349)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:698)
+	at com.meuprojeto.tests.AgendamentoEntrevistaTest.deveExibirErroAoAgendarComCamposVazios(AgendamentoEntrevistaTest.java:105)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.meuprojeto.tests.AgendamentoEntrevistaTest.deveAgendarNovaEntrevistaComSucesso -- Time elapsed: 8.750 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+Locator expected to be visible
+Call log:
+Locator.expect with timeout 5000ms
+waiting for locator("h1:has-text('Agendar')")
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:68)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:50)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:354)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:349)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:698)
+	at com.meuprojeto.tests.AgendamentoEntrevistaTest.deveAgendarNovaEntrevistaComSucesso(AgendamentoEntrevistaTest.java:28)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
