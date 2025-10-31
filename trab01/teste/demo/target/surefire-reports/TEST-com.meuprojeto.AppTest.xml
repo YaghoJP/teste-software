@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.meuprojeto.AppTest" time="0.026" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.meuprojeto.AppTest" time="0.037" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/test-classes:/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/classes:/home/yagho/.m2/repository/com/microsoft/playwright/playwright/1.40.0/playwright-1.40.0.jar:/home/yagho/.m2/repository/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar:/home/yagho/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/yagho/.m2/repository/com/microsoft/playwright/driver/1.40.0/driver-1.40.0.jar:/home/yagho/.m2/repository/com/microsoft/playwright/driver-bundle/1.40.0/driver-bundle-1.40.0.jar:/home/yagho/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar:/home/yagho/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/yagho/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/yagho/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar:/home/yagho/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:"/>
+    <property name="java.class.path" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/test-classes:/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/classes:/home/yaghojp/.m2/repository/com/microsoft/playwright/playwright/1.40.0/playwright-1.40.0.jar:/home/yaghojp/.m2/repository/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar:/home/yaghojp/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/yaghojp/.m2/repository/com/microsoft/playwright/driver/1.40.0/driver-1.40.0.jar:/home/yaghojp/.m2/repository/com/microsoft/playwright/driver-bundle/1.40.0/driver-bundle-1.40.0.jar:/home/yaghojp/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar:/home/yaghojp/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/yaghojp/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/yaghojp/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar:/home/yaghojp/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:"/>
     <property name="java.vm.vendor" value="Ubuntu"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="https://ubuntu.com/"/>
@@ -12,36 +12,36 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/surefire/surefirebooter-20251029233231724_3.jar /home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/surefire 2025-10-29T23-32-31_686-jvmRun1 surefire-20251029233231724_1tmp surefire_0-20251029233231724_2tmp"/>
+    <property name="sun.java.command" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/surefire/surefirebooter-20251030224613569_3.jar /home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/surefire 2025-10-30T22-46-13_522-jvmRun1 surefire-20251030224613569_1tmp surefire_0-20251030224613569_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/test-classes:/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/classes:/home/yagho/.m2/repository/com/microsoft/playwright/playwright/1.40.0/playwright-1.40.0.jar:/home/yagho/.m2/repository/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar:/home/yagho/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/yagho/.m2/repository/com/microsoft/playwright/driver/1.40.0/driver-1.40.0.jar:/home/yagho/.m2/repository/com/microsoft/playwright/driver-bundle/1.40.0/driver-bundle-1.40.0.jar:/home/yagho/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar:/home/yagho/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/yagho/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/yagho/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar:/home/yagho/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:"/>
+    <property name="surefire.test.class.path" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/test-classes:/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/classes:/home/yaghojp/.m2/repository/com/microsoft/playwright/playwright/1.40.0/playwright-1.40.0.jar:/home/yaghojp/.m2/repository/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar:/home/yaghojp/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/yaghojp/.m2/repository/com/microsoft/playwright/driver/1.40.0/driver-1.40.0.jar:/home/yaghojp/.m2/repository/com/microsoft/playwright/driver-bundle/1.40.0/driver-bundle-1.40.0.jar:/home/yaghojp/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.0/junit-jupiter-api-5.10.0.jar:/home/yaghojp/.m2/repository/org/junit/platform/junit-platform-commons/1.10.0/junit-platform-commons-1.10.0.jar:/home/yaghojp/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/yaghojp/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.0/junit-jupiter-engine-5.10.0.jar:/home/yaghojp/.m2/repository/org/junit/platform/junit-platform-engine/1.10.0/junit-platform-engine-1.10.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
-    <property name="user.home" value="/home/yagho"/>
+    <property name="user.home" value="/home/yaghojp"/>
     <property name="user.language" value="pt"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="java.version.date" value="2025-07-15"/>
     <property name="java.home" value="/usr/lib/jvm/java-21-openjdk-amd64"/>
     <property name="file.separator" value="/"/>
-    <property name="basedir" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo"/>
-    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="basedir" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo/target/surefire/surefirebooter-20251029233231724_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo/target/surefire/surefirebooter-20251030224613569_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.8+9-Ubuntu-0ubuntu124.04.1"/>
-    <property name="user.name" value="yagho"/>
+    <property name="user.name" value="yaghojp"/>
     <property name="stdout.encoding" value="UTF-8"/>
     <property name="path.separator" value=":"/>
     <property name="os.version" value="6.14.0-33-generic"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
-    <property name="localRepository" value="/home/yagho/.m2/repository"/>
+    <property name="localRepository" value="/home/yaghojp/.m2/repository"/>
     <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-21"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="java.version" value="21.0.8"/>
-    <property name="user.dir" value="/home/yagho/desenv/faculdade/teste-software/trab01/teste/demo"/>
+    <property name="user.dir" value="/home/yaghojp/dev/trabalhos-facul/teste-soft/teste-software/trab01/teste/demo"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="native.encoding" value="UTF-8"/>
@@ -53,5 +53,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.meuprojeto.AppTest" time="0.016"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.meuprojeto.AppTest" time="0.022"/>
 </testsuite>

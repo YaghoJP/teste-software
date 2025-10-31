@@ -31,7 +31,7 @@ public class CadastroEstudanteTest extends BaseTest {
 
         addEstudantePage.preencherFormulario(
                 "Aluno5",
-                "683.892.430-75",
+                "224.745.150-03",
                 "17/03/2003",
                 "Masculino",
                 "Brasil",

@@ -16,12 +16,12 @@ public class AgendarEntrevistaPage {
 
     public AgendarEntrevistaPage(Page page) {
         this.page = page;
-        this.estudanteInput = page.getByLabel("Estudante");
+        this.estudanteInput = page.getByLabel("Buscar estudante");
         this.dataEntrevistaInput = page.getByLabel("Data da Entrevista");
         this.agendarButton = page.locator("button:has-text('Agendar entrevista')");
         this.mensagemSucesso = page.locator("div:has-text('Entrevista agendada com sucesso!')");
-        this.mensagemErro = page.locator("p:has-text('A data não pode ser no passado.')");
-        this.pageTitle = page.locator("h1:has-text('Agendar')");
+        this.mensagemErro = page.locator("p.Mui-error:has-text('A data não pode ser no passado.')");
+        this.pageTitle = page.locator("span:has-text('Informações da entrevista')");
     }
 
     public void selecionarEstudante(String nomeEstudante) {
