@@ -213,8 +213,20 @@ public class AgendamentoEntrevistaTest extends BaseTest {
 
 **Severidade:** Alta
 
----
-**Defeito ID:** DEF-02
+**Defeito ID: DEF-02**
 
-**Título:** ...
-...
+**Título:** O sistema não exibe mensagem de erro ao tentar agendar uma entrevista sem selecionar um estudante.
+
+**Passos para Reproduzir:**
+
+1. Navegar para a página de "Entrevistas".
+2. Clicar em "Agendar Nova Entrevista".
+3. Não selecionar nenhum estudante no campo "Buscar estudante".
+4. Preencher a data da entrevista (válida ou futura).
+5. Clicar no botão "Agendar entrevista".
+
+**Resultado Esperado:** O sistema deveria exibir uma mensagem de erro clara indicando que o campo de estudante é obrigatório, impedindo que a entrevista seja agendada.
+
+**Resultado Atual:** O sistema não exibe nenhuma mensagem de erro ou validação visível. A tentativa de agendamento pode falhar silenciosamente ou gerar comportamento inesperado, deixando o usuário sem orientação sobre o erro.
+
+**Severidade: Alta**
