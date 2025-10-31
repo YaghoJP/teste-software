@@ -33,11 +33,6 @@ O sistema testado é o TEAEdu. Este sistema é voltado para a preparação e con
 
 ### 2.2. Jornada de Usuário 02: [Logar no sistema e agendar uma nova entrevista pedagógica]
 
-
-### 2.3. Jornada de Caminho Alternativo: [Título da Jornada]
-
-// Aqui vai, passo a passo, o cenário de caminho alternativo ou de erro que sua dupla escolheu automatizar.
-
 **Passos:**
 
 1.  O usuário com credenciais válidas (educador/administrador) irá logar no sistema
@@ -56,16 +51,134 @@ O sistema testado é o TEAEdu. Este sistema é voltado para a preparação e con
 
 ---
 
+### 2.3. Jornada de Caminho Alternativo: [Logar no sistema e procurar um estudante inexistente]
+
+1.  O usuário com credenciais válidas irá logar no sistema
+2.  O usuário logado será redirecionado para a página de lista de escolas
+3.  O usuário selecionará no menu lateral a opção "Estudantes"
+4.  Na aba estudantes deve preencher o input de filtros com um nome de estudante inexistente
+5.  A consulta deve retornar nenhum estudante encontrado
+
+
 ## 3. Page Objects Implementados
 
-// Aqui vai a descrição do que é testado pela Classe 1.
+**1: Classe LoginPage:**
+
+A classe LoginPage representa a página de login do sistema. Ela contém os Locator de input para login e o botão de logar, ela possui a função de porta de entrada ao sistema, caso o usuário tenha um login válido através do método 'login' é retornado o Page Object (PO) EscolaPage. 
+
 ```java
-// Aqui vai o código completo da Classe 1
+package com.meuprojeto.pages;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+public class LoginPage {
+
+    private Page page;
+
+
+    private final Locator usernameInput;
+    private final Locator passwordInput;
+    private final Locator loginButton;
+
+    public LoginPage(Page page) {
+
+        this.page = page; 
+        
+
+        this.usernameInput = page.locator("#email"); 
+        this.passwordInput = page.locator("#password"); 
+        this.loginButton = page.locator("button[type='submit']"); 
+    }
+
+    public void navigate(String url) {
+        page.navigate(url);
+    }
+
+
+    public EscolasPage login(String username, String password) {
+        usernameInput.fill(username);
+        passwordInput.fill(password);
+        loginButton.click();
+
+        return new EscolasPage(page);
+    }
+}
 ```
 
-**2: Classe AgendarEntrevistaPage:**
+**2: Classe EscolasPage:**
+
+A classe EscolasPage representa a página inicial do sistema. Ela contém os Locator do menu Lateral e do título da página para verificar se o login funcionou corretamente. Nela podemos acessar outras PO através da Page MenuComponent. 
+
+```java
+package com.meuprojeto.pages;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+public class EscolasPage {
+
+    private  Page page;
+    private  SideMenuComponent sideMenu;
+    private  Locator pageTitle;
+
+    public EscolasPage(Page page) {
+        this.page = page;
+        this.sideMenu = new SideMenuComponent(page);
+        this.pageTitle = page.locator("h1:has-text('Escolas')"); // (Substitua seletor)
+    }
+
+    // Método para acessar o menu
+    public SideMenuComponent getSideMenu() {
+        return this.sideMenu;
+    }
+
+    // Método para o teste verificar se está na página certa
+    public Locator getPageTitleLocator() {
+        return pageTitle;
+    }
+}
+```
+
+**3: Classe SideMenuComponent:**
+
+A classe SideMenuComponent representa o menu lateral do sistema. Ela contém os Locator para as páginas necessárias do sistema.
+
+```java
+package com.meuprojeto.pages;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+public class SideMenuComponent {
+
+    private  Page page;
+
+    private Locator estudantesLink;
+    private Locator entrevistasLink;
+    
+    public SideMenuComponent(Page page) {
+        this.page = page;
+        this.estudantesLink = page.locator("nav a:has-text('Estudantes')"); 
+        this.entrevistasLink = page.locator("nav a:has-text('Entrevistas')");
+    }
+
+    public EstudantesPage clicarEstudantes() {
+        estudantesLink.click();
+        return new EstudantesPage(page);
+    }
+
+    public EntrevistasPage clicarEntrevistas() {
+        entrevistasLink.click();
+        return new EntrevistasPage(page);
+    }
+}
+```
+
+**4: Classe AgendarEntrevistaPage:**
 A classe AgendarEntrevistaPage representa a página/modal de agendamento de entrevistas do sistema. Ela encapsula todos os elementos e ações que podem ser executadas nessa página, como selecionar um estudante, preencher a data da entrevista, clicar no botão de agendar e verificar mensagens de sucesso ou erro.
 
+```java
 public class AgendarEntrevistaPage {
     private Page page;
     private final Locator estudanteInput;
@@ -111,19 +224,203 @@ public class AgendarEntrevistaPage {
         return mensagemErro;
     }
 }
+```
+
+**5: Classe EstudantesPage:**
+
+A classe EstudantesPage representa a página de Listagem dos Estudantes. Ela contém os Locator para as listagem, o botão para cadastrar um novo estudante e o PO da página de adicionar um novo estudante.
+
+```java
+package com.meuprojeto.pages;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+
+public class EstudantesPage {
+
+    private Page page;
+    private final SideMenuComponent sideMenu; 
+    private  Locator addEstudanteButton ;
+    private  Locator successMessage;
+    private Locator inputPesquisa;
+    private  Locator entriesStatus;
+    
+    public EstudantesPage(Page page) {
+        this.page = page;
+        this.sideMenu = new SideMenuComponent(page);
+        this.addEstudanteButton = page.locator("button:has-text('Adicionar novo estudante')"); 
+        this.inputPesquisa = page.getByPlaceholder("Busque por nome, CPF..."); 
+    }
+
+    public AddEstudantePage clicarAdicionarNovoEstudante() {
+        addEstudanteButton.click();
+        return new AddEstudantePage(page);
+    }
+
+    public Locator getMensagemSucessoLocator() {
+        this.successMessage = page.locator("div:has-text('Estudante cadastrado com sucesso!')"); // (Substitua seletor)
+        return successMessage;
+    }
+
+    public Locator buscarEstudante(String nome) {
+        inputPesquisa.fill(nome);
+        this.entriesStatus = page.locator("text=Mostrando 1 de 1 entradas");
+        return entriesStatus;
+    }
+
+    public Locator buscarEstudanteInexistente(String nome) {
+        inputPesquisa.fill(nome);
+        this.entriesStatus = page.locator("text=Nenhum estudante foi adicionado ainda. Que tal adicionar?");
+        return entriesStatus;
+    }
+}
+```
+
+**6: Classe EstudantesPage:**
+
+A classe AddEstudantePage representa a página de Adicionar um Estudantes. Ela contém os Locator para os inputs de cadastros e o botão para cadastrar um novo estudante além do PO da página de estudantes.
+
+```java
+package com.meuprojeto.pages;
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
+public class AddEstudantePage {
+
+    private  Page page;
+    private  Locator nomeInput;
+    private  Locator cpfInput;
+    private  Locator dataNascimentoInput;
+    private  Locator generoInput;
+    private  Locator paisInput;
+    private  Locator anoEscolarInput;
+    private  Locator nomeRespInput;
+    private  Locator parentescoInput;
+    private  Locator telefoneInput;
+    private  Locator professorInput;
+    private  Locator cepInput;
+    private  Locator ruaInput;
+    private  Locator numeroInput;
+    private  Locator bairroInput;
+    private  Locator cadastrarButton;
+    private  Locator pageTitle;
+
+    public AddEstudantePage(Page page) {
+        this.page = page;
+        this.nomeInput = page.getByLabel("Nome Completo"); 
+        this.cpfInput = page.getByLabel("CPF"); 
+        this.dataNascimentoInput = page.getByLabel("Data de Nascimento");
+        this.generoInput = page.getByLabel("Gênero"); 
+        this.paisInput = page.getByLabel("País de Nascimento"); 
+        this.anoEscolarInput = page.getByLabel("Ano Escolar");  
+        this.nomeRespInput = page.getByLabel("Nome do Responsável"); 
+        this.parentescoInput = page.getByLabel("Parentesco");
+        this.telefoneInput = page.getByLabel("Telefone");  
+        this.professorInput = page.getByLabel("Professor Responsável");  
+        this.cepInput = page.getByLabel("CEP");
+        this.ruaInput = page.getByLabel("Rua"); 
+        this.numeroInput = page.getByLabel("Número");
+        this.bairroInput = page.getByLabel("Bairro");
+        this.cadastrarButton = page.locator("button:has-text('Cadastrar Estudante')"); 
+        this.pageTitle = page.getByLabel("h1:has-text('Estudantes')");
+    }
+
+
+    public void preencherFormulario(String nome, String cpf, String dataNasc, String genero,
+                                   String pais, String anoEscolar, String nomeResp,
+                                   String parentesco, String telefone, String professor,
+                                   String cep,  String bairro ) {
+        nomeInput.fill(nome);
+        cpfInput.fill(cpf);
+        dataNascimentoInput.fill(dataNasc);
+        generoInput.click();
+        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(genero)).click();
+        paisInput.fill(pais); 
+        anoEscolarInput.click();
+        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(anoEscolar)).click(); 
+        nomeRespInput.fill(nomeResp); 
+        parentescoInput.click();
+        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(parentesco)).click();
+        telefoneInput.fill(telefone);  
+        professorInput.click();
+        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(professor)).click(); 
+        cepInput.fill(cep); 
+
+        assertThat(ruaInput).not().isEmpty();
+        numeroInput.fill("100");
+        bairroInput.fill(bairro);
+    }
+
+
+    public EstudantesPage clicarCadastrar() {
+        cadastrarButton.click();
+
+        return new EstudantesPage(page);
+    }
+
+    public Locator getPageTitleLocator() {
+        return pageTitle;
+    }
+}
+```
 
 
 ## 4. Testes Automatizados
 
-// Aqui vai a descrição do que é testado pela Classe de Teste 1.
+**1: Classe BaseTest**
+A classe BaseTest contém os dados iniciais para iniciar os testes usando o Playwright além das limpezas que são feitas após cada teste, ela é a base para outras classes de testes
+
 ```java
-// Aqui vai o código completo da Classe de Teste 1
+package com.meuprojeto.tests;
+
+import com.microsoft.playwright.*;
+import org.junit.jupiter.api.*;
+
+public abstract class BaseTest {
+
+
+    static Playwright playwright;
+    static Browser browser;
+
+    protected BrowserContext context;
+    protected Page page;
+
+    @BeforeAll
+    static void launchBrowser() {
+        playwright = Playwright.create();
+
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
+                .setHeadless(false) 
+                .setSlowMo(50));
+    }
+
+    @AfterAll
+    static void closeBrowser() {
+        playwright.close();
+    }
+
+    @BeforeEach
+    void createContextAndPage() {
+        context = browser.newContext(new Browser.NewContextOptions()
+                .setLocale("pt-BR"));
+        page = context.newPage();
+    }
+
+    @AfterEach
+    void closeContext() {
+        context.close();
+    }
+}
 ```
 **2: Classe AgendamentoEntrevistaTest**
 A classe AgendamentoEntrevistaTest contém os testes automatizados relacionados ao agendamento de entrevistas no sistema. Ela utiliza o padrão Page Object para interagir com as páginas de login, escolas, entrevistas e agendamento.
 
 Os testes validam tanto o fluxo de sucesso (agendar uma nova entrevista) quanto os casos de erro (tentar agendar com data passada), garantindo que o sistema se comporte conforme esperado.
 
+```java
 public class AgendamentoEntrevistaTest extends BaseTest {
     
     @Test
@@ -178,6 +475,86 @@ public class AgendamentoEntrevistaTest extends BaseTest {
     }
     
 }
+```
+
+**3: Classe CadastroEstudanteTest**
+A classe CadastroEstudanteTest contém os testes relacionados as jornadas 1 e 3.
+
+```java
+package com.meuprojeto.tests;
+
+import com.meuprojeto.pages.AddEstudantePage;
+import com.meuprojeto.pages.EscolasPage;
+import com.meuprojeto.pages.EstudantesPage;
+import com.meuprojeto.pages.LoginPage;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+import com.microsoft.playwright.TimeoutError;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
+public class CadastroEstudanteTest extends BaseTest { 
+
+    @Test
+    void deveCadastrarNovoEstudanteComSucesso() {
+
+        LoginPage loginPage = new LoginPage(page);
+        String url = "https://app.development.teai.com.br";
+
+        loginPage.navigate(url);
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+
+        assertThat(escolasPage.getPageTitleLocator()).isVisible();
+
+        EstudantesPage estudantesPage = escolasPage.getSideMenu().clicarEstudantes();
+
+        AddEstudantePage addEstudantePage = estudantesPage.clicarAdicionarNovoEstudante();
+
+        addEstudantePage.preencherFormulario(
+                "Aluno5",
+                "224.745.150-03",
+                "17/03/2003",
+                "Masculino",
+                "Brasil",
+                "Educação Infantil",
+                "Cleber",
+                "Pai",
+                "44999999999",
+                "Professor IMA",
+                "87365000",
+                "Centro"      
+        );
+        addEstudantePage.clicarCadastrar();
+
+
+        try {
+            assertThat(estudantesPage.buscarEstudante("Aluno4")).isVisible(); // Espera até 10s
+        } catch (TimeoutError e) {
+            fail("FALHA NA VERIFICAÇÃO: O estudante Aluno4 não foi encontrado na tabela após a busca.");
+        }
+       
+    }
+
+    @Test
+    void buscarEstudanteInexistente() {
+
+        LoginPage loginPage = new LoginPage(page);
+        String url = "https://app.development.teai.com.br";
+
+        loginPage.navigate(url);
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+
+        assertThat(escolasPage.getPageTitleLocator()).isVisible();
+
+        EstudantesPage estudantesPage = escolasPage.getSideMenu().clicarEstudantes();
+
+        assertThat(estudantesPage.buscarEstudanteInexistente("NomeInexistente12345646454")).isVisible(); // Espera até 10s    
+    }
+}
+```
+
 
 ## 5. Laudo de Problemas nos Requisitos
 
@@ -230,3 +607,36 @@ public class AgendamentoEntrevistaTest extends BaseTest {
 **Resultado Atual:** O sistema não exibe nenhuma mensagem de erro ou validação visível. A tentativa de agendamento pode falhar silenciosamente ou gerar comportamento inesperado, deixando o usuário sem orientação sobre o erro.
 
 **Severidade: Alta**
+
+**Defeito ID:** DEF-03
+
+**Título:** O sistema permite a exclusão de um estudante que tenha entrevista vinculada a ele.
+
+**Passos para Reproduzir:**
+
+1. Navegar para a página de "Cadastro de Entrevista".
+2. Vinculas um estudante para a Entrevista.
+3. Gerar a entrevista.
+4. Navegar para a página de "Estudantes".
+5. Excluir o estudante com a entrevista vinculada.
+
+**Resultado Esperado:** O sistema deveria exibir uma mensagem de alerta dizendo que o estudante tem uma entrevista vinculada e perguntar se deseja excluir a entrevista também, caso a entrevista já tenha sido realizada não permite a exclusão do estudante.
+
+**Resultado Atual (Teórico):** Atualmente o sistema permite a exclusão e a entrevista continua listada porém com erro.
+
+**Severidade:** Alta
+
+**Defeito ID:** DEF-04
+
+**Título:** O sistema não permite filtrar um CPF que contenha máscara.
+
+**Passos para Reproduzir:**
+
+1. Navegar para a página de "Estudantes".
+2. Filtrar um CPF que está com máscara (EX: 111.111.111-11).
+
+**Resultado Esperado:** O sistema deveria tratar o caso do usuário informar um CPF com máscara e permitir a filtragem desse caso.
+
+**Resultado Atual (Teórico):** Atualmente o sistema não consegue encontrar um usuário com o CPF com máscaras.
+
+**Severidade:** Média
