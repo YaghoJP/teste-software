@@ -1,8 +1,8 @@
 ---
 title: Relatório Prática 03 - Teste de Sistemas com Playwright
-author: XXXXXX
-RA: XXXXXX
-date: AAAA-MM-DD
+author: Yagho Petini - Hudson Perrut
+RA: a2380366
+date: 31-10-2025
 tags:
   - markdown
   - vscode
@@ -174,6 +174,7 @@ public class SideMenuComponent {
     }
 }
 ```
+
 
 **4: Classe AgendarEntrevistaPage:**
 A classe AgendarEntrevistaPage representa a página/modal de agendamento de entrevistas do sistema. Ela encapsula todos os elementos e ações que podem ser executadas nessa página, como selecionar um estudante, preencher a data da entrevista, clicar no botão de agendar e verificar mensagens de sucesso ou erro.
@@ -367,7 +368,50 @@ public class AddEstudantePage {
 }
 ```
 
+**6: Classe: EntrevistasPage.java**
 
+Descrição:
+A classe EntrevistasPage representa a página de listagem e gerenciamento de entrevistas no sistema.
+Ela encapsula os elementos e ações que podem ser realizadas nessa tela, permitindo que os testes interajam com a interface de forma estruturada e reutilizável.
+
+Por meio desse Page Object, é possível:
+- Navegar até o formulário de agendamento de uma nova entrevista.
+- Acessar o menu lateral (SideMenuComponent) para transitar entre seções do sistema.
+- Verificar o título da página para confirmar que a navegação foi bem-sucedida.
+- Buscar entrevistas específicas na tabela com base no nome do estudante.
+
+```java
+public class EntrevistasPage {
+    private Page page;
+    private final SideMenuComponent sideMenu;
+    private final Locator addEntrevistaButton;
+    private final Locator pageTitle;
+
+    public EntrevistasPage(Page page) {
+        this.page = page;
+        this.sideMenu = new SideMenuComponent(page);
+        this.addEntrevistaButton = page.locator("button:has-text('Agendar Nova Entrevista')");
+        this.pageTitle = page.locator("h1:has-text('Entrevistas')");
+    }
+
+    public AgendarEntrevistaPage clicarAgendarNovaEntrevista() {
+        addEntrevistaButton.click();
+        return new AgendarEntrevistaPage(page);
+    }
+
+    public SideMenuComponent getSideMenu() {
+        return this.sideMenu;
+    }
+
+    public Locator getPageTitleLocator() {
+        return pageTitle;
+    }
+
+    public Locator buscarEntrevistaPorEstudante(String nomeEstudante) {
+        return page.locator("table tbody tr:has-text('" + nomeEstudante + "')");
+    }
+}
+```
 ## 4. Testes Automatizados
 
 **1: Classe BaseTest**
@@ -555,6 +599,68 @@ public class CadastroEstudanteTest extends BaseTest {
 }
 ```
 
+**3: Classe EntrevistasPageTest**
+A classe EntrevistasPageTest contém os testes relacionados as jornadas 2, assim como a classe AgendamentoEntrevistaTest.
+
+```java
+package com.meuprojeto.tests;
+
+import com.meuprojeto.pages.AgendarEntrevistaPage;
+import com.meuprojeto.pages.EscolasPage;
+import com.meuprojeto.pages.EntrevistasPage;
+import com.meuprojeto.pages.LoginPage;
+import com.microsoft.playwright.TimeoutError;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.fail;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
+public class EntrevistasPageTest extends BaseTest {
+
+    @Test
+    void deveExibirTituloDaPaginaDeEntrevistas() {
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.navigate("https://app.development.teai.com.br");
+
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+        EntrevistasPage entrevistasPage = escolasPage.getSideMenu().clicarEntrevistas();
+
+        assertThat(entrevistasPage.getPageTitleLocator()).isVisible();
+    }
+
+    @Test
+    void deveAbrirPaginaDeAgendamentoAoClicarEmAgendarNovaEntrevista() {
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.navigate("https://app.development.teai.com.br");
+
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+        EntrevistasPage entrevistasPage = escolasPage.getSideMenu().clicarEntrevistas();
+
+        AgendarEntrevistaPage agendarPage = entrevistasPage.clicarAgendarNovaEntrevista();
+
+        assertThat(agendarPage.getPageTitleLocator()).isVisible();
+    }
+
+    @Test
+    void deveEncontrarEntrevistaExistenteNaTabela() {
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.navigate("https://app.development.teai.com.br");
+
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+        EntrevistasPage entrevistasPage = escolasPage.getSideMenu().clicarEntrevistas();
+
+        String nomeEstudante = "Aluno2";
+
+        try {
+            assertThat(entrevistasPage.buscarEntrevistaPorEstudante(nomeEstudante)).isVisible();
+        } catch (TimeoutError e) {
+            fail("FALHA NA VERIFICAÇÃO: A entrevista para " + nomeEstudante + " não foi encontrada na tabela.");
+        }
+    }
+}
+
+```
 
 ## 5. Laudo de Problemas nos Requisitos
 

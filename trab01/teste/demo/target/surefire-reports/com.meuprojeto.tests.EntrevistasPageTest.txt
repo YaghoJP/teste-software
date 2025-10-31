@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.meuprojeto.tests.EntrevistasPageTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.83 s -- in com.meuprojeto.tests.EntrevistasPageTest
