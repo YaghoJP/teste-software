@@ -63,10 +63,55 @@ O sistema testado é o TEAEdu. Este sistema é voltado para a preparação e con
 // Aqui vai o código completo da Classe 1
 ```
 
-// Aqui vai a descrição do que é testado pela Classe 2.
-```java
-// Aqui vai o código completo da Classe 2
-```
+**2: Classe AgendarEntrevistaPage:**
+A classe AgendarEntrevistaPage representa a página/modal de agendamento de entrevistas do sistema. Ela encapsula todos os elementos e ações que podem ser executadas nessa página, como selecionar um estudante, preencher a data da entrevista, clicar no botão de agendar e verificar mensagens de sucesso ou erro.
+
+public class AgendarEntrevistaPage {
+    private Page page;
+    private final Locator estudanteInput;
+    private final Locator dataEntrevistaInput;
+    private final Locator agendarButton;
+    private final Locator mensagemSucesso;
+    private final Locator mensagemErro;
+    private final Locator pageTitle;
+
+    public AgendarEntrevistaPage(Page page) {
+        this.page = page;
+        this.estudanteInput = page.getByLabel("Buscar estudante");
+        this.dataEntrevistaInput = page.getByLabel("Data da Entrevista");
+        this.agendarButton = page.locator("button:has-text('Agendar entrevista')");
+        this.mensagemSucesso = page.locator("div:has-text('Entrevista agendada com sucesso!')");
+        this.mensagemErro = page.locator("p.Mui-error:has-text('A data não pode ser no passado.')");
+        this.pageTitle = page.locator("span:has-text('Informações da entrevista')");
+    }
+
+    public void selecionarEstudante(String nomeEstudante) {
+        estudanteInput.fill(nomeEstudante);
+        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(nomeEstudante)).click();
+    }
+
+    public void preencherDataEntrevista(String data) {
+        dataEntrevistaInput.fill(data);
+    }
+
+    public EntrevistasPage clicarAgendar() {
+        agendarButton.click();
+        return new EntrevistasPage(page);
+    }
+
+    public Locator getPageTitleLocator() {
+        return pageTitle;
+    }
+
+    public Locator getMensagemSucessoLocator() {
+        return mensagemSucesso;
+    }
+
+    public Locator getMensagemErroLocator() {
+        return mensagemErro;
+    }
+}
+
 
 ## 4. Testes Automatizados
 
@@ -74,11 +119,65 @@ O sistema testado é o TEAEdu. Este sistema é voltado para a preparação e con
 ```java
 // Aqui vai o código completo da Classe de Teste 1
 ```
+**2: Classe AgendamentoEntrevistaTest**
+A classe AgendamentoEntrevistaTest contém os testes automatizados relacionados ao agendamento de entrevistas no sistema. Ela utiliza o padrão Page Object para interagir com as páginas de login, escolas, entrevistas e agendamento.
 
-// Aqui vai a descrição do que é testado pela Classe de Teste 2.
-```java
-// Aqui vai o código completo da Classe de Teste 2
-```
+Os testes validam tanto o fluxo de sucesso (agendar uma nova entrevista) quanto os casos de erro (tentar agendar com data passada), garantindo que o sistema se comporte conforme esperado.
+
+public class AgendamentoEntrevistaTest extends BaseTest {
+    
+    @Test
+    void deveAgendarNovaEntrevistaComSucesso() {
+        LoginPage loginPage = new LoginPage(page);
+        String url = "https://app.development.teai.com.br";
+        loginPage.navigate(url);
+        
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+        assertThat(escolasPage.getPageTitleLocator()).isVisible();
+        
+        EntrevistasPage entrevistasPage = escolasPage.getSideMenu().clicarEntrevistas();
+        assertThat(entrevistasPage.getPageTitleLocator()).isVisible();
+        
+        AgendarEntrevistaPage agendarPage = entrevistasPage.clicarAgendarNovaEntrevista();
+        assertThat(agendarPage.getPageTitleLocator()).isVisible();
+        
+        String dataFutura = DateHelper.obterDataFutura(7);
+        agendarPage.selecionarEstudante("Aluno2"); // Ajustar para estudante existente
+        agendarPage.preencherDataEntrevista(dataFutura);
+        agendarPage.clicarAgendar();
+        
+        try {
+            assertThat(entrevistasPage.buscarEntrevistaPorEstudante("Aluno2")).isVisible();
+        } catch (TimeoutError e) {
+            fail("FALHA NA VERIFICAÇÃO: A entrevista para Aluno2 não foi encontrada na tabela.");
+        }
+    }
+    
+    @Test
+    void deveExibirErroAoAgendarComDataPassada() {
+        LoginPage loginPage = new LoginPage(page);
+        String url = "https://app.development.teai.com.br";
+        loginPage.navigate(url);
+        
+        EscolasPage escolasPage = loginPage.login("grupo2@email.com", "senha123");
+        assertThat(escolasPage.getPageTitleLocator()).isVisible();
+        
+        EntrevistasPage entrevistasPage = escolasPage.getSideMenu().clicarEntrevistas();
+        AgendarEntrevistaPage agendarPage = entrevistasPage.clicarAgendarNovaEntrevista();
+        
+        String dataPassada = DateHelper.obterDataPassada(7);
+        agendarPage.selecionarEstudante("Aluno2");
+        agendarPage.preencherDataEntrevista(dataPassada);
+        agendarPage.clicarAgendar();
+        
+        try {
+            assertThat(agendarPage.getMensagemErroLocator()).isVisible();
+        } catch (TimeoutError e) {
+            fail("FALHA NA VERIFICAÇÃO: Mensagem de erro não foi exibida ao tentar agendar com data passada.");
+        }
+    }
+    
+}
 
 ## 5. Laudo de Problemas nos Requisitos
 
